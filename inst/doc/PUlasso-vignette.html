@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hyebin Song" />
 
-<meta name="date" content="2017-12-18" />
+<meta name="date" content="2018-02-13" />
 
 <title>PUlasso: High-dimensional variable selection with presence-only data</title>
 
@@ -71,7 +71,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">PUlasso: High-dimensional variable selection with presence-only data</h1>
 <h4 class="author"><em>Hyebin Song</em></h4>
-<h4 class="date"><em>2017-12-18</em></h4>
+<h4 class="date"><em>2018-02-13</em></h4>
 
 
 
@@ -108,13 +108,13 @@ PUlasso is an algorithm for parameter estimation and classification using Positi
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cv.fit =<span class="st"> </span><span class="kw">cv.grpPUlasso</span>(<span class="dt">X=</span>simulPU<span class="op">$</span>X,<span class="dt">z=</span>simulPU<span class="op">$</span>z,<span class="dt">pi=</span>simulPU<span class="op">$</span>truePY1)</code></pre></div>
 <p>We use deviance for a measure of model fit. Average deviance and standard error of deviance over all <span class="math inline">\(k\)</span>-folds for all <span class="math inline">\(lambda\)</span> values saved in <code>cv.fit$cvm</code> and <code>cv.fit$cvsd</code>, respectively. We are particularly interested in two lambda values : lambda.min which gives the minimum mean cross-validation deviance, and lambda.1se which corresponds to the largest <span class="math inline">\(\lambda\)</span> such that cvm is within one standard error of the minimum. We can also extract coefficients corresponding to such lambda levels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(cv.fit,<span class="dt">lambda=</span>cv.fit<span class="op">$</span>lambda.1se)</code></pre></div>
-<pre><code>##                   [,1]
-## (Intercept) -0.0280929
-## X1           0.2444103
-## X2           0.2796224
-## X3           0.0000000
-## X4           0.0000000
-## X5           0.0000000</code></pre>
+<pre><code>##                    [,1]
+## (Intercept) -0.03389889
+## X1           0.23745018
+## X2           0.27053565
+## X3           0.00000000
+## X4           0.00000000
+## X5           0.00000000</code></pre>
 <p>We finalize this section by demonstrating how to do a classification based on fitted models. A natural threshold of .5 is applied for a classification. We plot <span class="math inline">\(X1-X2\)</span> colored by <span class="math inline">\(yhat\)</span> to check classification performances.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phat&lt;-<span class="kw">predict</span>(cv.fit,<span class="dt">newdata =</span> simulPU<span class="op">$</span>X,<span class="dt">lambda =</span> cv.fit<span class="op">$</span>lambda.1se,<span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)
 yhat&lt;-<span class="dv">1</span><span class="op">*</span>(phat<span class="op">&gt;</span><span class="fl">0.5</span>)</code></pre></div>
@@ -134,11 +134,10 @@ fit.grp =<span class="st"> </span><span class="kw">grpPUlasso</span>(<span class
 ## X4           0.00000000  0.00000000  0.000000000  0.000000000
 ## X5           0.00000000  0.00000000  0.000000000  0.000000000</code></pre>
 </div>
-<div id="fitting-with-a-sparse-matrix-or-a-big-matrix" class="section level3">
-<h3>Fitting with a sparse matrix or a big matrix</h3>
+<div id="fitting-with-a-sparse-matrix" class="section level3">
+<h3>Fitting with a sparse matrix</h3>
 <p>PUlasso can exploit a sparsity in an input matrix for a more efficient calculation. If <code>dgCMatrix</code> type of the input matrix is provided, PUlasso automatically performs a sparse calculation.</p>
-<p>The package also allows for users to use memory-mapped files for the data larger than memory size. The object <code>big.matrix</code> in the <strong>bigmemory</strong> package needs to be provided as an input matrix <span class="math inline">\(X\)</span> for this functionality. There are in fact two big.matix types which are handled in different ways; a standard big.matrix only uses available RAM, whilst a file-backed big.matrix uses additional hard drive space, and thus it may exceed available RAM.</p>
-<p>For a simple demonstration, here we create <code>dgCMatrix</code> and standard type <code>big.matrix</code> objects based on <span class="math inline">\(X\)</span>. First we create a sparse matrix sparseX by imposing 0 on 95% of the entries of <span class="math inline">\(X\)</span>.</p>
+<p>For a simple demonstration, here we create <code>dgCMatrix</code> objects based on <span class="math inline">\(X\)</span>. First we create a sparse matrix sparseX by imposing 0 on 95% of the entries of <span class="math inline">\(X\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sparseX &lt;-<span class="st"> </span>simulPU<span class="op">$</span>X
 sparseX[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(simulPU<span class="op">$</span>X),<span class="dt">size =</span> <span class="kw">length</span>(simulPU<span class="op">$</span>X)<span class="op">*</span><span class="fl">0.95</span>)]&lt;-<span class="dv">0</span>
 sparseX&lt;-<span class="kw">Matrix</span>(sparseX)
@@ -146,24 +145,13 @@ sparseX&lt;-<span class="kw">Matrix</span>(sparseX)
 <pre><code>## [1] &quot;dgCMatrix&quot;
 ## attr(,&quot;package&quot;)
 ## [1] &quot;Matrix&quot;</code></pre>
-<p>a simple <code>big matrix</code> object can be created using <code>as.big.matrix</code> function. More meaningful example using <code>big.matrix</code> object would involve reading data whose size exceeds available RAM using and creating file-backed <code>big.matrix</code> object through <code>read.big.matrix</code> function in the package <strong>bigmemory</strong>, and then use such object as an input for <code>grpPUlasso</code> function. Please see <a href="bigmemory">https://cran.r-project.org/web/packages/bigmemory/index.html</a> for more detailed discussion.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bigX &lt;-<span class="st"> </span><span class="kw">as.big.matrix</span>(simulPU<span class="op">$</span>X)
-<span class="kw">class</span>(bigX)</code></pre></div>
-<pre><code>## [1] &quot;big.matrix&quot;
-## attr(,&quot;package&quot;)
-## [1] &quot;bigmemory&quot;</code></pre>
 <p>Those input matrices can be used in the same way. For example,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">spfit&lt;-<span class="kw">grpPUlasso</span>(sparseX,simulPU<span class="op">$</span>z,simulPU<span class="op">$</span>truePY1)
-bigfit&lt;-<span class="kw">grpPUlasso</span>(bigX,simulPU<span class="op">$</span>z,simulPU<span class="op">$</span>truePY1)
 newx =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>),<span class="dv">2</span>,<span class="dv">5</span>)
 <span class="kw">predict</span>(spfit,<span class="dt">newdata =</span> newx,<span class="dt">lambda =</span> spfit<span class="op">$</span>lambda[<span class="dv">10</span>])</code></pre></div>
 <pre><code>##           [,1]
-## [1,] 0.5334296
-## [2,] 0.5409738</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(bigfit,<span class="dt">newdata =</span> newx,<span class="dt">lambda =</span> spfit<span class="op">$</span>lambda[<span class="dv">10</span>])</code></pre></div>
-<pre><code>##           [,1]
-## [1,] 0.6005043
-## [2,] 0.5690398</code></pre>
+## [1,] 0.5911813
+## [2,] 0.4146990</code></pre>
 </div>
 </div>
 </div>

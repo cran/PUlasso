@@ -1,5 +1,6 @@
 ## ----include=F-----------------------------------------------------------
 library(PUlasso)
+library(Matrix)
 
 ## ------------------------------------------------------------------------
 data("simulPU")
@@ -61,13 +62,7 @@ sparseX<-Matrix(sparseX)
 class(sparseX)
 
 ## ------------------------------------------------------------------------
-bigX <- as.big.matrix(simulPU$X)
-class(bigX)
-
-## ------------------------------------------------------------------------
 spfit<-grpPUlasso(sparseX,simulPU$z,simulPU$truePY1)
-bigfit<-grpPUlasso(bigX,simulPU$z,simulPU$truePY1)
 newx = matrix(rnorm(10),2,5)
 predict(spfit,newdata = newx,lambda = spfit$lambda[10])
-predict(bigfit,newdata = newx,lambda = spfit$lambda[10])
 
