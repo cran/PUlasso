@@ -24,7 +24,7 @@ legend("bottomright",bg="transparent",legend=c("positive","negative"),col=c("red
 coef(fit, lambda=fit$lambda[30])
 
 ## ------------------------------------------------------------------------
-xnew = simulPU$X[c(400,500),]
+xnew = matrix(rnorm(10),2,5)
 predict(fit,newdata = xnew,lambda = fit$lambda[30])
 
 ## ------------------------------------------------------------------------

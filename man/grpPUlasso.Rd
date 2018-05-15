@@ -7,10 +7,10 @@
 grpPUlasso(X, z, pi, initial_coef = NULL, group = 1:ncol(X),
   penalty = NULL, lambda = NULL, nlambda = 100,
   lambdaMinRatio = ifelse(N < p, 0.05, 0.005), maxit = ifelse(method ==
-  "CD", 1000, N * 10), eps = 1e-04, inner_eps = 0.01, verbose = FALSE,
+  "CD", 10000, N * 10), eps = 1e-04, inner_eps = 0.01, verbose = FALSE,
   stepSize = NULL, stepSizeAdjustment = NULL, batchSize = 1,
-  samplingProbabilities = NULL, method = c("CD", "GD", "SGD", "SVRG",
-  "SAG"), trace = c("none", "param", "fVal", "all"))
+  updateFrequency = N, samplingProbabilities = NULL, method = c("CD",
+  "GD", "SGD", "SVRG", "SAG"), trace = c("none", "param", "fVal", "all"))
 }
 \arguments{
 \item{X}{Input matrix; each row is an observation. Can be a matrix or a sparse matrix.}
@@ -45,9 +45,11 @@ grpPUlasso(X, z, pi, initial_coef = NULL, group = 1:ncol(X),
 
 \item{batchSize}{A batch size. Default is 1.}
 
+\item{updateFrequency}{An update frequency of full gradient for method =="SVRG"}
+
 \item{samplingProbabilities}{sampling probabilities for each of samples for stochastic gradient-based optimization. if NULL, each sample is chosen proportionally to Li.}
 
-\item{method}{Optimization method. Default is Coordinate Descent. CD for Coordinate Descent, GD for Gradient Descent, SGD for Stochastic Gradient Descent, SVRG for Stochastic Variance Reduction Gradient, SAG for Stochastic Averageing Gradient.}
+\item{method}{Optimization method. Default is Coordinate Descent. CD for Coordinate Descent, GD for Gradient Descent, SGD for Stochastic Gradient Descent, SVRG for Stochastic Variance Reduction Gradient, SAG for Stochastic Averaging Gradient.}
 
 \item{trace}{An option for saving intermediate quantities. All intermediate standardized-scale parameter estimates(trace=="param"), objective function values at each iteration(trace=="fVal"), or both(trace=="all") are saved in optResult. Since this is computationally very heavy, it should be only used for decently small-sized dataset and small maxit. A default is "none".}
 }
