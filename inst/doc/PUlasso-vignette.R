@@ -18,7 +18,7 @@ legend("bottomright",bg="transparent",legend=c("positive","negative"),col=c("red
 
 
 ## ------------------------------------------------------------------------
-(fit=grpPUlasso(X=simulPU$X,z=simulPU$z,pi=simulPU$truePY1))
+(fit=grpPUlasso(X=simulPU$X,z=simulPU$z,py1=simulPU$truePY1))
 
 ## ------------------------------------------------------------------------
 coef(fit, lambda=fit$lambda[30])
@@ -28,7 +28,7 @@ xnew = matrix(rnorm(10),2,5)
 predict(fit,newdata = xnew,lambda = fit$lambda[30])
 
 ## ------------------------------------------------------------------------
-(cv.fit = cv.grpPUlasso(X=simulPU$X,z=simulPU$z,pi=simulPU$truePY1))
+(cv.fit = cv.grpPUlasso(X=simulPU$X,z=simulPU$z,py1=simulPU$truePY1))
 
 ## ----include=F-----------------------------------------------------------
 # qplot(log(cv.fit$lambda),cv.fit$cvm)+
@@ -50,7 +50,7 @@ legend("bottomright",bg="transparent",legend=c("hat_negative","hat_positive"),co
 
 ## ------------------------------------------------------------------------
 grpvec = c(1,2,2,3,3)
-fit.grp = grpPUlasso(X=simulPU$X,z=simulPU$z,pi=simulPU$truePY1,group = grpvec)
+fit.grp = grpPUlasso(X=simulPU$X,z=simulPU$z,py1=simulPU$truePY1,group = grpvec)
 
 ## ------------------------------------------------------------------------
 coef(fit.grp,fit.grp$lambda[12:15])
@@ -67,10 +67,5 @@ newx = matrix(rnorm(10),2,5)
 predict(spfit,newdata = newx,lambda = spfit$lambda[10])
 
 ## ------------------------------------------------------------------------
-newx = matrix(rnorm(10),2,5)
-predict(spfit,newdata = newx,lambda = spfit$lambda[10])
-
-
-## ------------------------------------------------------------------------
-(fit.SVRG = grpPUlasso(X=simulPU$X,z=simulPU$z,pi=simulPU$truePY1,method="SVRG",maxit=10000,eps = 1e-6,lambda =fit$lambda[2]))
+(fit.SVRG = grpPUlasso(X=simulPU$X,z=simulPU$z,py1=simulPU$truePY1,method="SVRG",eps = 1e-6,lambda =fit$lambda[2]))
 

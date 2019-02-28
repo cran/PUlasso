@@ -4,9 +4,9 @@
 \name{PUlasso-package}
 \alias{PUlasso}
 \alias{PUlasso-package}
-\title{PUlasso : An efficient algorithm to solve Positive and Unlabelled(PU) problem with lasso or group lasso penalty}
+\title{PUlasso : An efficient algorithm to solve Positive and Unlabeled(PU) problem with lasso or group lasso penalty}
 \description{
-The package efficiently solves PU problem in low or high dimensional setting using Maximization-Minorization and (block) coordinate descent. It allows simultaneous feature selection and parameter estimation for classification. Sparse calculation and parallel computing via OpenMP are supported for the further computational speed-up. See Hyebin Song, Garvesh Raskutti (2017) <\url{https://arxiv.org/abs/1711.08129}>.
+The package efficiently solves PU problem in low or high dimensional setting using Maximization-Minorization and (block) coordinate descent. It allows simultaneous feature selection and parameter estimation for classification. Sparse calculation and parallel computing are supported for the further computational speed-up. See Hyebin Song, Garvesh Raskutti (2018) <\url{https://arxiv.org/abs/1711.08129}>.
 }
 \details{
 Main functions: grpPUlasso, cv.grpPUlasso, coef, predict
@@ -14,8 +14,8 @@ Main functions: grpPUlasso, cv.grpPUlasso, coef, predict
 \examples{
 vignette("PUlasso-vignette")  
 data("simulPU")
-fit<-grpPUlasso(X=simulPU$X,z=simulPU$z,pi=simulPU$truePY1)
-cvfit<-cv.grpPUlasso(X=simulPU$X,z=simulPU$z,pi=simulPU$truePY1)
+fit<-grpPUlasso(X=simulPU$X,z=simulPU$z,py1=simulPU$truePY1)
+cvfit<-cv.grpPUlasso(X=simulPU$X,z=simulPU$z,py1=simulPU$truePY1)
 coef(fit,lambda=fit$lambda[10])
 predict(cvfit,newdata = head(simulPU$X), lambda=cvfit$lambda.1se,type = "response")
 }
