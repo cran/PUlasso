@@ -1,15 +1,18 @@
 ---
-title: "PUlasso: High-dimensional variable selection with presence-only data"
-author: "Hyebin Song"
-header-includes:
-   - \usepackage{amsmath}
-date: "`r Sys.Date()`"
+title: "PUlasso-vignette"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{PUlasso-vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 ```{r,include=F}
 library(PUlasso)

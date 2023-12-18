@@ -1,3 +1,9 @@
+## ----include = FALSE----------------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
 ## ----include=F----------------------------------------------------------------
 library(PUlasso)
 library(Matrix)

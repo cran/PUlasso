@@ -29,6 +29,8 @@ Useful links:
 
 }
 \author{
-Hyebin Song, \email{hps5320@psu.edu}, Garvesh Raskutti, \email{raskutti@stat.wisc.edu}.
+Hyebin Song, \email{hsong@stat.wisc.edu}, Garvesh Raskutti, \email{raskutti@stat.wisc.edu}.
 }
-\concept{PUlearning Lasso GroupLasso}
+\keyword{GroupLasso}
+\keyword{Lasso}
+\keyword{PUlearning}

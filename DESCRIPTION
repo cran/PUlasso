@@ -1,8 +1,8 @@
 Package: PUlasso
 Type: Package
 Title: High-Dimensional Variable Selection with Presence-Only Data
-Version: 3.2.4
-Date: 2021-1-15
+Version: 3.2.5
+Date: 2023-12-18
 Authors@R: c(person("Hyebin", "Song", role = c("aut", "cre"),
                      email = "hps5320@psu.edu"),
             person("Garvesh", "Raskutti", role="aut",email="raskutti@stat.wisc.edu"))
@@ -12,15 +12,15 @@ Imports: Rcpp (>= 0.12.8), methods, Matrix, doParallel, foreach,
         ggplot2
 Depends: R(>= 2.10)
 LinkingTo: Rcpp, RcppEigen, Matrix
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Suggests: testthat, knitr, rmarkdown
 VignetteBuilder: knitr
 URL: https://arxiv.org/abs/1711.08129
 BugReports: https://github.com/hsong1/PUlasso/issues
 NeedsCompilation: yes
-Packaged: 2021-01-15 21:20:14 UTC; hyebin
+Packaged: 2023-12-18 00:38:18 UTC; hyebins
 Author: Hyebin Song [aut, cre],
   Garvesh Raskutti [aut]
 Maintainer: Hyebin Song <hps5320@psu.edu>
 Repository: CRAN
-Date/Publication: 2021-01-17 05:50:09 UTC
+Date/Publication: 2023-12-18 14:40:06 UTC
